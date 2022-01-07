@@ -1,7 +1,8 @@
 import { Component } from 'react';
-import { nanoid } from 'nanoid';
 import FeedbackOptions from '../FeedbackOptions/FeedbackOptions';
 import Statistics from '../Statistics/Statistics';
+import Notification from '../Notification/Notification';
+import Section from '../../Section/Section';
 
 class App extends Component {
   state = {
@@ -10,7 +11,7 @@ class App extends Component {
     bad: 0,
   };
   onLeaveFeedback = e => {
-    const label = e.target.name;
+    const label = e.currentTarget.name;
     this.setState(prevState => ({ [label]: prevState[label] + 1 }));
   };
 
@@ -23,9 +24,7 @@ class App extends Component {
   countPositivePercentage = e => {
     const { good } = this.state;
     const total = this.countTotal();
-    console.log(total);
     const percent = (good * 100) / total;
-    console.log(percent);
     return Math.round(percent);
   };
 
@@ -38,9 +37,14 @@ class App extends Component {
 
     return (
       <>
-        <h1>Please leave feedback</h1>
-        <FeedbackOptions options={options} onLeaveFeedback={onLeaveFeedback} />
-        <>
+        <Section title="Please leave feedback">
+          <FeedbackOptions
+            options={options}
+            onLeaveFeedback={onLeaveFeedback}
+          />
+        </Section>
+
+        <Section title="Statistics">
           {good || neutral || bad ? (
             <Statistics
               good={good}
@@ -50,9 +54,9 @@ class App extends Component {
               positivePercentage={PositivePercentage}
             />
           ) : (
-            alert('There is no feedback')
+            <Notification message="There is no feedback" />
           )}
-        </>
+        </Section>
       </>
     );
   }
