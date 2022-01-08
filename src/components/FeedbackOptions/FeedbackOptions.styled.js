@@ -2,9 +2,6 @@ import styled from '@emotion/styled';
 
 export const List = styled.ul`
   display: flex;
-  /* flex-direction: row; */
-
-  /* justify-content: space-evenly; */
   list-style: none;
 `;
 
